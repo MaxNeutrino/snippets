@@ -1,6 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {webSocket} from 'rxjs/webSocket';
 
+export class Event {
+  name: string;
+  count: number;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,15 +16,13 @@ export class AppComponent implements OnInit {
 
   messages: string[] = [];
 
-  private subject = webSocket({
-    url: 'ws://localhost:8080/push',
-    deserializer: e => e.data
-  });
+  private subject = webSocket('ws://localhost:8080/push');
 
   ngOnInit(): void {
     this.subject.next({message: 'message'});
     this.subject.subscribe(message => {
-      this.messages.push(message as string);
+      const event = message as Event;
+      this.messages.push(event.name + ' #' + event.count);
     });
   }
 }

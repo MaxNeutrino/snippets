@@ -1,21 +1,22 @@
 package io.github.maxneutrino.webfluxwebsockets.service;
 
+import io.github.maxneutrino.webfluxwebsockets.model.Event;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.EmitterProcessor;
 import reactor.core.publisher.Flux;
 
 @Service
-public class UnicastServiceImpl implements UnicastService {
+public class EventEventUnicastServiceImpl implements EventUnicastService {
 
-    private EmitterProcessor<String> processor = EmitterProcessor.create();
+    private EmitterProcessor<Event> processor = EmitterProcessor.create();
 
     @Override
-    public void onNext(String next) {
+    public void onNext(Event next) {
         processor.onNext(next);
     }
 
     @Override
-    public Flux<String> getMessages() {
+    public Flux<Event> getMessages() {
         return processor.publish().autoConnect();
     }
 }
