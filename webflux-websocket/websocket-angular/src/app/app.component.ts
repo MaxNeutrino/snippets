@@ -19,8 +19,8 @@ export class AppComponent implements OnInit {
   private subject = webSocket('ws://localhost:8080/push');
 
   ngOnInit(): void {
-    this.subject.next({message: 'message'});
-    this.subject.subscribe(message => {
+    this.subject.next({message: 'message'}); // <- ping first message
+    this.subject.subscribe(message => {       // <- listen messages from server
       const event = message as Event;
       this.messages.push(event.name + ' #' + event.count);
     });
