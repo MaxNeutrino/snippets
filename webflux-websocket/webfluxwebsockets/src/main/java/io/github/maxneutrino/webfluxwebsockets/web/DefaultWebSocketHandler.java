@@ -27,7 +27,11 @@ public class DefaultWebSocketHandler implements WebSocketHandler {
     @Override
     public Mono<Void> handle(WebSocketSession session) {
         Flux<WebSocketMessage> messages = session.receive()
-                .flatMap(message -> eventUnicastService.getMessages())
+                // .doOnNext(message -> { read message here or in the block below })
+                .flatMap(message -> {
+                    // or read message here
+                    return eventUnicastService.getMessages();
+                })
                 .flatMap(o -> {
                     try {
                         return Mono.just(objectMapper.writeValueAsString(o));

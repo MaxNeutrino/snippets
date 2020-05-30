@@ -6,7 +6,7 @@ import reactor.core.publisher.EmitterProcessor;
 import reactor.core.publisher.Flux;
 
 @Service
-public class EventEventUnicastServiceImpl implements EventUnicastService {
+public class EventUnicastServiceImpl implements EventUnicastService {
 
     private EmitterProcessor<Event> processor = EmitterProcessor.create();
 
